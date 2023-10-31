@@ -20,6 +20,8 @@ def login():
         query = "SELECT username, password FROM trainers WHERE username = '" + username + "' AND password = '" + password + "'"
         cursor.execute(query)
         results = cursor.fetchall()
+
+        print(*results, sep = ", ")
         
         if len(results) == 1:
             # log in user
@@ -31,6 +33,7 @@ def login():
             print("Invalid username and password")
             print("username: " + username)
             print("password: " + password)
+            return render_template("login.html")
     return render_template("login.html")
 
 @auth.route('/signUp', methods=['GET', 'POST'])
@@ -45,10 +48,15 @@ def signUp():
         password = request.form.get('password')
         firstName = request.form.get('firstName')
         lastName = request.form.get('lastName')
+        print("username: " + username + ", password: " + password)
+        print("first name: " + firstName + ", last name: " + lastName)
 
         # check if username is unique
-        query = "SELECT username FROM trainers WHERE username = '" + username + "' "
+        query = "SELECT username FROM trainers WHERE username = '" + username + "'"
+        cursor.execute(query)
         results = cursor.fetchall()
+        print("results: ")
+        print(*results, sep = ", ")
         if len(results) == 0:
             # add new user to db
             # command = "INSERT INTO trainers(username, password, firstName, lastName) VALUES (?, ?, ?, ?);"
@@ -57,11 +65,13 @@ def signUp():
             cursor.execute("""INSERT INTO trainers(username, password, firstName, lastName) VALUES (?, ?, ?, ?)""", (username, password, firstName, lastName))
             connection.commit()
             connection.close()
+            print("Account created")
             return render_template("pokedex.html")
         else:
             # username is already taken
             print("Invalid username")
             print("username: " + username)
             print("password: " + password)
+            return render_template("signUp.html")
         
     return render_template("signUp.html")
