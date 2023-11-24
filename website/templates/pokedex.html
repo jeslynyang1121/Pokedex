@@ -1,6 +1,99 @@
 {% extends "base.html" %}
 
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/pokedex.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+{% endblock %}
+
 {% block content %}
-<h2>All Current Pokemon</h2>
-<hr>
+<form method="POST" action="/pokedex/search_by">
+    <div class="search_container">
+        <label for="search_by">Search By</label>
+        <select id="search_category" name="search_category">
+            <option value="number">Number</option>
+            <option value="name">Name</option>
+            <option value="type">Type</option>
+            <option value="height">Height</option>
+            <option value="weight">Weight</option>
+            <option value="gender">Gender</option>
+            <option value="trainer">Trainer</option>
+        </select>
+        <input type="text" id="search_for" name="search_for" placeholder="Searching for...">
+        <button type="submit"><i class="fa fa-search"></i></button>
+
+        <button type="button" class="add" onclick="location.href = '/add_pokemon'">Add</button>
+    </div>
+</form>
+
+<form method="POST">
+    <div class="sort_by_container">
+        <h2>All Pokemon</h2>
+        <select id="sort_category" name="sort_category">
+            <option value="number">Number</option>
+            <option value="name">Name</option>
+            <option value="type">Type</option>
+            <option value="height">Height</option>
+            <option value="weight">Weight</option>
+            <option value="gender">Gender</option>
+            <option value="trainer">Trainer</option>
+        </select>
+        <button type="submit" class="sort">Sort</button>
+        <hr>
+    </div>
+</form>
+
+<table>
+    <tr>
+        <th>Number</th>
+        <th>Name</th>
+        <th>Image</th>
+        <th>Type</th>
+        <th>Height</th>
+        <th>Weight</th>
+        <th>Gender</th>
+        <th>Trainer</th>
+        <th>Edit</th>
+    </tr>
+    {% for pokemon in all_pokemon_stats %}
+    <tr>
+        <td>#0{{ pokemon[0] }}</td>
+
+        <td>{{ pokemon[1] }}</td>
+
+        {% if pokemon[2] == "" or pokemon[2] == None %}
+            <td>?</td>
+        {% else %}
+            <td>{{ pokemon[2] }}</td>
+        {% endif %}
+
+        {% if pokemon[3] == "" or pokemon[3] == None %}
+            <td>?</td>
+        {% else %}
+            <td>{{ pokemon[3] }}</td>
+        {% endif %}
+
+        {% if pokemon[4] == "" or pokemon[4] == None %}
+            <td>?</td>
+        {% else %}
+            <td>{{ pokemon[4] }}</td>
+        {% endif %}
+
+        {% if pokemon[5] == "" or pokemon[5] == None %}
+            <td>?</td>
+        {% else %}
+            <td>{{ pokemon[5] }}</td>
+        {% endif %}
+
+        {% if pokemon[6] == "" %}
+            <td>?</td>
+        {% else %}
+            <td>{{ pokemon[6] }}</td>
+        {% endif %}
+
+        <td>{{ pokemon[7] }}</td>
+
+        <td><button type="button" class="edit" onclick="location.href = '/edit_pokemon'"> EDIT </button></td>
+    </tr>
+    {% endfor %}
+</table>
 {% endblock %}

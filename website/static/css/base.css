@@ -3,7 +3,13 @@ header {
     padding: 10px;
     text-align: left;
     font-size: 30px;
+    font-family: Arial;
     color: white;
+    border-bottom: 3px solid black;
+}
+
+body {
+    font-family: Arial;
 }
 
 button {
@@ -12,19 +18,27 @@ button {
     margin: 10px 10px;
     cursor: pointer;
     border: none;
-    width: 15%;
+    width: 5%;
     color: white;
+    border-radius: 3px;
 }
 
 button.hover {
-    opacity: 0.5;
+    background-color: rgb(218, 83, 94);
 }
 
-input[type=text], input[type=username], input[type=password] {
+input[type=text] {
     width: 100%;
     padding: 15px 15px;
     margin: 10px 0px;
     display: inline-block;
-    border: 1px solic #ccc;
+    border: 2px solid #ccc;
     box-sizing: border-box;
+    border-radius: 3px;
+}
+
+hr {
+    height: 5px;
+    background-color: black;
+    margin-bottom: 1px;
 }

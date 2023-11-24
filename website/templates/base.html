@@ -3,12 +3,12 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width = device-width" initial-scale=1 />
-        <link 
-            rel="stylesheet"
-            href="{{ url_for('static', filename='css/base.css') }}"
-        />
+        <link rel="stylesheet" href="{{ url_for('static', filename='css/base.css') }}"/>
+        <div class="container">
+            {% block style %}
+            {% endblock %}
+        </div>
         <title>Pokedex</title> 
-        
     </head>
     <body>
         <header>Pokedex</header>

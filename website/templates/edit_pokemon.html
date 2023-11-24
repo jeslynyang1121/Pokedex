@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block style %}
+{% endblock %}
+
+{% block content %}
+<form method="POST">
+    <h2>Add Pokemon</h2>
+    <hr>
+    <div class="form-group">
+        <label for="name">Name   </label>
+        <input 
+            type="text" 
+            id="name" 
+            name="name" 
+            required
+        />
+
+        <label for="image_link">Image Link   </label>
+        <input 
+            type="text" 
+            id="image_link" 
+            name="image_link" 
+        />
+
+        <label for="type">Type   </label>
+        <input 
+            type="text" 
+            id="type" 
+            name="type" 
+        />
+
+        <label for="height">Height   </label>
+        <input type="text" 
+            id="height" 
+            name="height" 
+        />
+
+        <label for="weight">Weight   </label>
+        <input type="text" 
+            id="weight" 
+            name="weight" 
+        />
+
+        <label for="gender">Gender   </label>
+        <input type="text" 
+            id="gender" 
+            name="gender" 
+        />
+
+        <label for="trainer">Trainer   </label>
+        <input type="text" 
+            id="trainer" 
+            name="trainer" 
+            required
+        />
+    </div>
+    <button>Add</button>
+</form>
+<button type="button" onclick="location.href = '/pokedex'">Back</button>
+{% endblock %}

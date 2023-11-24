@@ -1,7 +1,31 @@
 from . import db
 
+# create models for db tables
+
 class User(db.Model):
-    username = db.Column(db.String(20), primary_key=True)
-    password = db.Column(db.String(20), unique=False)
-    firstName = db.Column(db.String(20), unique=False)
-    lastName = db.Column(db.String(20), unique=False)
+    id = db.Column(db.Integer, primary_key=True, index=True)
+    username = db.Column(db.String(20), index=True)
+    password = db.Column(db.String(20))
+    firstName = db.Column(db.String(20))
+    lastName = db.Column(db.String(20), default=None)
+    statistics = db.relationship('Statistics')
+
+class Pokemon(db.Model):
+    id = db.Column(db.Integer, primary_key=True, index=True)
+    name = db.Column(db.String(20))
+    statistics = db.relationship('Statistics')
+    evolutions = db.relationship('Evolutions')
+
+class Statistics(db.Model):
+    pokemon_id = db.Column(db.Integer, db.ForeignKey('pokemon.id'), primary_key=True, index=True)
+    image = db.Column(db.String(1000), default=None)
+    type = db.Column(db.Integer, default=None)
+    height = db.Column(db.Integer, default=None)
+    weight = db.Column(db.Integer, default=None)
+    gender = db.Column(db.String(20), default=None)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
+
+class Evolutions(db.Model):
+    id = db.Column(db.Integer, primary_key=True, index=True)
+    pre_pokemon_id = db.Column(db.Integer, db.ForeignKey('pokemon.id'))
+    curr_pokemon_id = db.Column(db.Integer)

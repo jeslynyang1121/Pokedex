@@ -1,0 +1,68 @@
+h2 {
+    margin-top: 10px;
+    display: inline;
+    border-bottom: 0;
+}
+
+.search_container {
+    flex-flow: row wrap;
+    padding: 5px;
+}
+
+.sort_by_container {
+    flex-flow: row wrap;
+    padding: 5px;
+}
+
+.sort_by_container input[type=text], .sort_by_container select {
+    position: absolute;
+    right: 10%;
+    margin: -15px 5px 0 0;
+}
+
+input[type=text], select {
+    width: auto;
+    padding: 12px 20px;
+    margin: 8px 10px 0 0;
+    border: 2px solid #ddd;
+    border-radius: 3px;
+}
+
+button.sort {
+    position: absolute;
+    right: 5%;
+    margin: -15px -5px 0 0;
+}
+
+button.add {
+    position: absolute;
+    right: 5%;
+    margin: 5px -5px 0 0;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 2px solid #ddd;
+}
+
+th, td {
+    text-align: left;
+    padding: 2px;
+}
+
+tr {
+    border: 1px solid #ddd;
+}
+
+button.edit {
+    padding: 7px 7px;
+    margin: 5px 5px;
+    width: 20%;
+}
+
+hr {
+    height: 1px;
+    background-color: black;
+    margin-bottom: 1px;
+}

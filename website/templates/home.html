@@ -1,6 +1,12 @@
 {% extends "base.html" %}
 
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}"/>
+{% endblock %}
+
 {% block content %}
-<button onclick="window.location.href = '/login';">Log In</button>
-<button onclick="window.location.href = '/signUp';">Sign Up</button>
+<div class="start">
+    <button onclick="location.href = '/login'">Log In</button>
+    <button onclick="location.href = '/signUp'">Sign Up</button>
+</div>
 {% endblock %}

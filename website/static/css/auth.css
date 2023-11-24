@@ -1,0 +1,13 @@
+input[type=username], input[type=password] {
+    width: 100%;
+    padding: 15px 15px;
+    margin: 10px 10px;
+    display: inline-block;
+    border: 1px solic #ccc;
+    box-sizing: border-box;
+}
+
+label {
+    padding: 15px 0;
+    margin-bottom: -10px;
+}

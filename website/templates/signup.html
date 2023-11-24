@@ -1,8 +1,13 @@
 {% extends "base.html" %}
 
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
+{% endblock %}
+
 {% block content %}
 <form method="POST">
     <h2>Sign Up</h2>
+    <hr>
     <div class="form-group">
         <label for="firstName"><b>First Name</b></label>
         <input 
