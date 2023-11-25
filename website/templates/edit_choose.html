@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<form method="POST" action="/edit_choose">
+    <div class="edit_which_container">
+        <label for="edit_which">Choose to edit   </label>
+        <select id="id_to_edit" name="id_to_edit">
+            {% for num in all_pokemon %}
+                <option value="{{ num[0] }}">#{{ num[0] }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit" name="edit" onclick="location.href = '/edit_pokemon'">Edit</button>
+    </div>
+</form>
+{% endblock %}

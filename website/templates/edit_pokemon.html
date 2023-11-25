@@ -4,15 +4,25 @@
 {% endblock %}
 
 {% block content %}
-<form method="POST">
-    <h2>Add Pokemon</h2>
+<form method="POST" action="/edit_pokemon">
+    <h2>Edit Pokemon</h2>
     <hr>
     <div class="form-group">
+        <label for="number">Number   </label>
+        <input 
+            type="text" 
+            id="number" 
+            name="number" 
+            value="{{ (pokemon_info[0])[0] }}"
+            required
+        />
+
         <label for="name">Name   </label>
         <input 
             type="text" 
             id="name" 
             name="name" 
+            value="{{ (pokemon_info[0])[1] }}"
             required
         />
 
@@ -21,6 +31,7 @@
             type="text" 
             id="image_link" 
             name="image_link" 
+            value="{{ (pokemon_info[0])[2] }}"
         />
 
         <label for="type">Type   </label>
@@ -28,34 +39,47 @@
             type="text" 
             id="type" 
             name="type" 
+            value="{{ (pokemon_info[0])[3] }}"
         />
 
         <label for="height">Height   </label>
         <input type="text" 
             id="height" 
             name="height" 
+            value="{{ (pokemon_info[0])[4] }}"
         />
 
         <label for="weight">Weight   </label>
         <input type="text" 
             id="weight" 
             name="weight" 
+            value="{{ (pokemon_info[0])[5] }}"
         />
 
         <label for="gender">Gender   </label>
         <input type="text" 
             id="gender" 
             name="gender" 
+            value="{{ (pokemon_info[0])[6] }}"
+        />
+
+        <label for="evolution">Evolution   </label>
+        <input type="text" 
+            id="evolution" 
+            name="evolution" 
+            value="{{ (pokemon_info[0])[7] }}"
         />
 
         <label for="trainer">Trainer   </label>
         <input type="text" 
             id="trainer" 
             name="trainer" 
+            value="{{ (pokemon_info[0])[8] }}"
             required
         />
     </div>
-    <button>Add</button>
+    <button type="submit" name="edit" onclick="location.href = '/pokedex'">Edit</button>
+    <button type="submit" name="delete" onclick="location.href = '/pokedex'">Delete</button>
 </form>
-<button type="button" onclick="location.href = '/pokedex'">Back</button>
+<button type="button" onclick="location.href = '/pokedex'">Cancel</button>
 {% endblock %}

@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block content %}
-<form method="POST">
+<form method="POST" action="/add_pokemon">
     <h2>Add Pokemon</h2>
     <hr>
     <div class="form-group">
@@ -48,6 +48,12 @@
             name="gender" 
         />
 
+        <label for="evolution">Evolution   </label>
+        <input type="text" 
+            id="evolution" 
+            name="evolution" 
+        />
+
         <label for="trainer">Trainer   </label>
         <input type="text" 
             id="trainer" 
@@ -57,5 +63,5 @@
     </div>
     <button>Add</button>
 </form>
-<button type="button" onclick="location.href = '/pokedex'">Back</button>
+<button type="submit" onclick="location.href = '/pokedex'">Back</button>
 {% endblock %}

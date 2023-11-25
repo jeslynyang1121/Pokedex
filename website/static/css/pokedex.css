@@ -36,6 +36,12 @@ button.sort {
 
 button.add {
     position: absolute;
+    right: 10.56%;
+    margin: 5px -5px 0 0;
+}
+
+button.edit {
+    position: absolute;
     right: 5%;
     margin: 5px -5px 0 0;
 }
@@ -47,18 +53,18 @@ table {
 }
 
 th, td {
-    text-align: left;
-    padding: 2px;
+    text-align: center;
+    padding: 10px 10px;
 }
 
 tr {
     border: 1px solid #ddd;
 }
 
-button.edit {
+button.more {
     padding: 7px 7px;
     margin: 5px 5px;
-    width: 20%;
+    width: 50%;
 }
 
 hr {
