@@ -12,6 +12,12 @@ body {
     font-family: Arial;
 }
 
+p {
+    background-color: #BF3626;
+    color: white;
+    padding: 10px;
+}
+
 button {
     background-color: #BF3626;
     padding: 15px 15px;

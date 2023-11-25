@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, redirect, request, url_for
+from flask import Blueprint, render_template, redirect, request, url_for, flash
 from .models import User
 from . import db
 
@@ -7,6 +7,7 @@ auth = Blueprint('auth', __name__)
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
+    error = None
     if request.method == 'POST':
         # get form info
         username = request.form.get('username')
@@ -25,10 +26,12 @@ def login():
             print("Invalid username and password")
             print("username: " + username)
             print("password: " + password)
-    return render_template("login.html")
+            error = "Invalid username and password"
+    return render_template("login.html", error=error)
 
 @auth.route('/signUp', methods=['GET', 'POST'])
 def signUp():
+    error = None
     if request.method == 'POST':
         # connect to DB 
 
@@ -47,6 +50,7 @@ def signUp():
             print("Invalid username")
             print("username: " + username)
             print("password: " + password)
+            error = "Invalid username"
         else:
             # add new user to db
             newUser = User(username = username, password = password, firstName = firstName, lastName = lastName)
@@ -55,4 +59,4 @@ def signUp():
             print("Account created")
             return redirect(url_for('views.pokedex'))
         
-    return render_template("signup.html")
+    return render_template("signup.html", error=error)

@@ -72,6 +72,7 @@ def pokedex():
 
 @views.route('/add_pokemon', methods=['GET', 'POST'])
 def add_pokemon():
+    error = None
     if request.method == 'POST':
         # get form info
         name = request.form.get('name')
@@ -101,8 +102,10 @@ def add_pokemon():
 
             print("Pokemon Added Successfully")
             return redirect(url_for('views.pokedex'))
+        else:
+            error = "Invalid trainer name"
     print("Fail to add pokemon!")
-    return render_template("add_pokemon.html")
+    return render_template("add_pokemon.html", error=error)
 
 @views.route('/edit_choose', methods=['GET', 'POST'])
 def edit_choose():
@@ -134,6 +137,7 @@ def edit_choose():
 
 @views.route('/edit_pokemon', methods=['GET', 'POST'])
 def edit_pokemon():
+    error = None
     # works similar to add_pokemon
     if request.method == 'POST':
         # find if user is editing or deleting pokemon
@@ -163,6 +167,9 @@ def edit_pokemon():
                 trainer_id = trainer_results.id
                 # add pokemon to db
                 new_pokemon = Pokemon.query.filter_by(id = num).first()
+                if new_pokemon is None:
+                    error = "Invalid trainer name. Try again."
+                    return render_template("edit_pokemon.html", error=error)
                 new_pokemon.name = name
                 db.session.commit()
                 new_pokemon_stats = Statistics.query.filter_by(pokemon_id = num).first()
@@ -180,7 +187,8 @@ def edit_pokemon():
                 return redirect(url_for('views.pokedex'))
             else:
                 print("Pokemon Failed to Edit Successfully")
-                return redirect(url_for('views.edit_choose'))
+                error = "Invalid trainer name. Try again."
+                return render_template("edit_pokemon.html", error=error)
         elif isDelete is not None:
             print("delete")
             # get form info
@@ -202,7 +210,8 @@ def edit_pokemon():
                 print("Pokemon Failed to Delete Successfully")
                 return redirect(url_for('views.pokedex'))
             else:
-                return redirect(url_for('views.edit_choose'))
+                error = "Tried to delete invalid pokemon. Try again."
+                return render_template("edit_pokemon.html", error=error)
         
     print("Fail to edit pokemon!")
     return render_template("edit_pokemon.html")

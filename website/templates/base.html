@@ -13,6 +13,10 @@
     <body>
         <header>Pokedex</header>
 
+        {% if error %}
+        <strong><p>{{ error }}</p></strong>
+        {% endif %}
+
         <div class="container">
             {% block content %}
             {% endblock %}

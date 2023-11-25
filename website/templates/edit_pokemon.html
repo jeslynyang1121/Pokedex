@@ -13,7 +13,9 @@
             type="text" 
             id="number" 
             name="number" 
-            value="{{ (pokemon_info[0])[0] }}"
+            {% if pokemon_info %}
+                value="{{ (pokemon_info[0])[0] }}"
+            {% endif %}
             required
         />
 
@@ -22,7 +24,9 @@
             type="text" 
             id="name" 
             name="name" 
-            value="{{ (pokemon_info[0])[1] }}"
+            {% if pokemon_info %}
+                value="{{ (pokemon_info[0])[1] }}"
+            {% endif %}
             required
         />
 
@@ -31,7 +35,9 @@
             type="text" 
             id="image_link" 
             name="image_link" 
-            value="{{ (pokemon_info[0])[2] }}"
+            {% if pokemon_info %}
+                value="{{ (pokemon_info[0])[2] }}"
+            {% endif %}
         />
 
         <label for="type">Type   </label>
@@ -39,47 +45,59 @@
             type="text" 
             id="type" 
             name="type" 
-            value="{{ (pokemon_info[0])[3] }}"
+            {% if pokemon_info %}
+                value="{{ (pokemon_info[0])[3] }}"
+            {% endif %}
         />
 
         <label for="height">Height   </label>
         <input type="text" 
             id="height" 
             name="height" 
-            value="{{ (pokemon_info[0])[4] }}"
+            {% if pokemon_info %}
+                value="{{ (pokemon_info[0])[4] }}"
+            {% endif %}
         />
 
         <label for="weight">Weight   </label>
         <input type="text" 
             id="weight" 
             name="weight" 
-            value="{{ (pokemon_info[0])[5] }}"
+            {% if pokemon_info %}
+                value="{{ (pokemon_info[0])[5] }}"
+            {% endif %}
         />
 
         <label for="gender">Gender   </label>
         <input type="text" 
             id="gender" 
             name="gender" 
-            value="{{ (pokemon_info[0])[6] }}"
+            {% if pokemon_info %}
+                value="{{ (pokemon_info[0])[6] }}"
+            {% endif %}
         />
 
         <label for="evolution">Evolution   </label>
         <input type="text" 
             id="evolution" 
             name="evolution" 
-            value="{{ (pokemon_info[0])[7] }}"
+            {% if pokemon_info %}
+                value="{{ (pokemon_info[0])[7] }}"
+            {% endif %}
         />
 
         <label for="trainer">Trainer   </label>
         <input type="text" 
             id="trainer" 
             name="trainer" 
-            value="{{ (pokemon_info[0])[8] }}"
+            {% if pokemon_info %}
+                value="{{ (pokemon_info[0])[8] }}"
+            {% endif %}
             required
         />
     </div>
-    <button type="submit" name="edit" onclick="location.href = '/pokedex'">Edit</button>
-    <button type="submit" name="delete" onclick="location.href = '/pokedex'">Delete</button>
+    <button type="submit" name="edit">Edit</button>
+    <button type="submit" name="delete">Delete</button>
 </form>
 <button type="button" onclick="location.href = '/pokedex'">Cancel</button>
 {% endblock %}
