@@ -199,13 +199,13 @@ def edit_pokemon():
             # delete pokemon from pokedex
             old_pokemon = Pokemon.query.filter_by(id = num).first()
             old_pokemon_stats = Statistics.query.filter_by(pokemon_id = num).first()
-            # old_pokemon_evo = Evolutions(curr_pokemon = name)
+            old_pokemon_evo = Evolutions.query.filter_by(curr_pokemon = name)
             print(old_pokemon)
             print(old_pokemon_stats)
             if old_pokemon is not None and old_pokemon_stats is not None:
                 db.session.delete(old_pokemon)
                 db.session.delete(old_pokemon_stats)
-                # db.session.delete(old_pokemon_evo)
+                db.session.delete(old_pokemon_evo)
                 db.session.commit()
                 print("Pokemon Failed to Delete Successfully")
                 return redirect(url_for('views.pokedex'))
