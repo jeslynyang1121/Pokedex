@@ -1,9 +1,13 @@
 {% extends "base.html" %}
 
+{% block style %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/edit.css') }}">
+{% endblock %}
+
 {% block content %}
 <form method="POST" action="/edit_choose">
-    <div class="edit_which_container">
-        <label for="edit_which">Choose to edit   </label>
+    <div class="edit_container">
+        <label for="edit_which">Choose to edit</label>
         <select id="id_to_edit" name="id_to_edit">
             {% for num in all_pokemon %}
                 <option value="{{ num[0] }}">#{{ num[0] }}</option>
