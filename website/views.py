@@ -17,7 +17,7 @@ def pokedex():
     cursor = connection.cursor()
 
     # main query
-    query = "SELECT P.id, name, image, type, height, weight, gender, post_pokemon, U.username FROM Statistics LEFT JOIN Pokemon P ON pokemon_id = P.id LEFT JOIN Evolutions E ON name = curr_pokemon LEFT JOIN User U ON user_id = U.id"
+    query = "SELECT P.id, name, image, type, height, weight, gender, (SELECT name FROM Pokemon WHERE id = post_pokemon) AS post_pokemon, U.username FROM Statistics LEFT JOIN Pokemon P ON pokemon_id = P.id LEFT JOIN Evolutions E ON P.id = curr_pokemon LEFT JOIN User U ON user_id = U.id"
 
     # search for all pokemon and corresponding stats
     if request.method == 'GET':
@@ -96,7 +96,23 @@ def add_pokemon():
             db.session.commit()
             new_stats = Statistics(pokemon_id = new_pokemon.id, image=img, type = type, height = height, weight = weight, gender = gender, user_id = trainer_id)
             db.session.add(new_stats)
-            new_evo = Evolutions(curr_pokemon = name, post_pokemon = evolution)
+
+            evo_results = Pokemon.query.filter_by(name = evolution).first()
+            # check if evolution exists
+            if evo_results:
+                print("evolution exists")
+                new_evo = Evolutions(curr_pokemon = new_pokemon.id, post_pokemon = evo_results.id)
+            elif evolution is None or evolution=="":
+                new_evo = Evolutions(curr_pokemon = new_pokemon.id)
+            else:
+                # if evolution does not exist add evolution as well
+                print("add new evolution")
+                new_evo_pokemon = Pokemon(name = evolution)
+                db.session.add(new_evo_pokemon)
+                db.session.commit()
+                new_stats = Statistics(pokemon_id = new_evo_pokemon.id, image=None, type = None, height = None, weight = None, gender = None, user_id = trainer_id)
+                db.session.add(new_stats)
+                new_evo = Evolutions(curr_pokemon = new_pokemon.id, post_pokemon = new_evo_pokemon.id)
             db.session.add(new_evo)
             db.session.commit()
 
@@ -115,7 +131,7 @@ def edit_choose():
 
     if request.method == 'GET':
         # query all pokemon id's
-        query = "SELECT id FROM Pokemon P"
+        query = "SELECT id FROM Pokemon"
         cursor.execute(query)
         all_pokemon = cursor.fetchall()
         print(all_pokemon)
@@ -143,7 +159,6 @@ def edit_pokemon():
         # find if user is editing or deleting pokemon
         isEdit = request.form.get("edit")
         isDelete = request.form.get("delete")
-        print("in the post")
 
         if isEdit is not None:
             print("edit")
@@ -172,6 +187,7 @@ def edit_pokemon():
                     return render_template("edit_pokemon.html", error=error)
                 new_pokemon.name = name
                 db.session.commit()
+
                 new_pokemon_stats = Statistics.query.filter_by(pokemon_id = num).first()
                 new_pokemon_stats.image = img
                 new_pokemon_stats.type = type
@@ -179,9 +195,27 @@ def edit_pokemon():
                 new_pokemon_stats.weight = weight
                 new_pokemon_stats.gender = gender
                 new_pokemon_stats.trainer = trainer
-                new_pokemon_evo = Evolutions.query.filter_by(curr_pokemon = name).first()
-                new_pokemon_evo.post_pokemon = evolution
-                db.session.commit()
+
+                new_pokemon_evo = Evolutions.query.filter_by(curr_pokemon = num).first()
+                print(new_pokemon_evo)
+                if new_pokemon_evo:
+                    evo_results = Pokemon.query.filter_by(name = evolution).first()
+                    # check if evolution exists
+                    if evo_results:
+                        print("evolution exists")
+                        new_pokemon_evo.post_pokemon = evo_results.id
+                    elif evolution is None or evolution=="":
+                        new_pokemon_evo.post_pokemon = None
+                    else:
+                        # if evolution does not exist, add evolution as well
+                        print("add new evolution")
+                        new_evo_pokemon = Pokemon(name = evolution)
+                        db.session.add(new_evo_pokemon)
+                        db.session.commit()
+                        new_stats = Statistics(pokemon_id = new_evo_pokemon.id, image=None, type = None, height = None, weight = None, gender = None, user_id = trainer_id)
+                        db.session.add(new_stats)
+                        new_pokemon_evo.post_pokemon = new_evo_pokemon.id
+                    db.session.commit()
 
                 print("Pokemon Edited Successfully")
                 return redirect(url_for('views.pokedex'))
@@ -194,20 +228,21 @@ def edit_pokemon():
             # get form info
             num = request.form.get('number')
             name = request.form.get('name')
-            print("id: " + num + ", name: " + name)
 
             # delete pokemon from pokedex
             old_pokemon = Pokemon.query.filter_by(id = num).first()
             old_pokemon_stats = Statistics.query.filter_by(pokemon_id = num).first()
-            old_pokemon_evo = Evolutions.query.filter_by(curr_pokemon = name)
+            old_pokemon_evo = Evolutions.query.filter_by(curr_pokemon = num).first()
             print(old_pokemon)
             print(old_pokemon_stats)
+            print(old_pokemon_evo)
             if old_pokemon is not None and old_pokemon_stats is not None:
                 db.session.delete(old_pokemon)
                 db.session.delete(old_pokemon_stats)
+                db.session.commit()
+            if old_pokemon_evo is not None:
                 db.session.delete(old_pokemon_evo)
                 db.session.commit()
-                print("Pokemon Failed to Delete Successfully")
                 return redirect(url_for('views.pokedex'))
             else:
                 error = "Tried to delete invalid pokemon. Try again."

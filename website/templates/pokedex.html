@@ -85,20 +85,20 @@
             <td>{{ pokemon[5] }}</td>
         {% endif %}
 
-        {% if pokemon[6] == "" %}
+        {% if pokemon[6] == "" or pokemon[6] == None %}
             <td>?</td>
         {% else %}
             <td>{{ pokemon[6] }}</td>
         {% endif %}
 
-        <td>{{ pokemon[7] }}</td>
-
-        {% if pokemon[8] == "" %}
+        {% if pokemon[7] == "" or pokemon[7] == None %}
             <td>?</td>
         {% else %}
-            <td>{{ pokemon[8] }}</td>
+            <td>{{ pokemon[7] }}</td>
         {% endif %}
 
+        <td>{{ pokemon[8] }}</td>
+        
     </tr>
     {% endfor %}
 </table>

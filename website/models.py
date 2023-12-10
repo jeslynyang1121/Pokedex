@@ -27,5 +27,5 @@ class Statistics(db.Model):
 
 class Evolutions(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    curr_pokemon = db.Column(db.String(20), db.ForeignKey('pokemon.name'), index=True)
-    post_pokemon = db.Column(db.String(20))
+    curr_pokemon = db.Column(db.Integer, db.ForeignKey('pokemon.name'), index=True)
+    post_pokemon = db.Column(db.Integer, default=None)
